@@ -6,7 +6,12 @@ from django.db import models
 
 class PersonMixin(models.Model):
     middle_name = models.CharField(_('Middle name'), max_length=70, blank=True)
-    birth_date = models.DateField(_('Your birth date'), blank=True, auto_now=True)
+    birth_date = models.DateField(
+        _('Your birth date'),
+        blank=True,
+        auto_now=True,
+        editable=True,
+    )
     phone_number = PhoneNumberField(
         _('Your phone number'),
         unique=True,

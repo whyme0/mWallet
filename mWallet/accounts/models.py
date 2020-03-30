@@ -27,6 +27,7 @@ class Person(AbstractBaseUser, PermissionsMixin, PersonMixin):
             ' Unselect this instead of deleting accounts.'
         ),
     )
+    created_date = models.DateTimeField(default=timezone.now)
 
     objects = PersonManager()
 
@@ -69,7 +70,7 @@ class Wallet(models.Model):
         max_length=300,
     )
 
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return 'Wallet: %s' % self.name

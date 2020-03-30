@@ -7,7 +7,7 @@ class PersonAdmin(admin.ModelAdmin):
         'first_name', 'middle_name',
         'last_name', 'email',
         'phone_number', 'living_place',
-        'birth_date', 'created_at',
+        'birth_date', 'created_date',
     )
     list_filter = ('is_staff', 'is_active')
     search_fields = ('email',)

@@ -7,7 +7,7 @@ class PersonAdmin(admin.ModelAdmin):
         'first_name', 'middle_name',
         'last_name', 'email',
         'phone_number', 'living_place',
-        'birth_date',
+        'birth_date', 'created_at',
     )
     list_filter = ('is_staff', 'is_active')
     search_fields = ('email',)
@@ -18,7 +18,6 @@ admin.site.register(Person, PersonAdmin)
 
 class WalletAdmin(admin.ModelAdmin):
     fields = ('owner', 'name', 'description', 'created_date')
-    readonly_fields = ('created_date',)
     search_fields = ('name', 'owner')
 
 

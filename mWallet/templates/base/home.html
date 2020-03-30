@@ -7,10 +7,11 @@
 
 
 {% block content %}
-    <div class="container">
-        <div class="text-center" style='margin: 3rem 0'>
-            <a href="{% url 'home' %}" class="home h2">mWallet</a>
-            <p class="description h3">инструмент для управления вашими расходами</p>
-        </div>
+	{% if message_info %}
+		<p class="alert alert-success font-weight-bold">{{ message_info }}</p>	
+	{% endif %}
+    <div class="text-center" style='margin: 3rem 0'>
+        <a href="{% url 'home' %}" class="home h2">mWallet</a>
+        <p class="description h3">инструмент для управления вашими расходами</p>
     </div>
 {% endblock content %}

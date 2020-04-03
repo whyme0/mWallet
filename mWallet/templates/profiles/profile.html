@@ -1,15 +1,6 @@
-{% extends "super.html" %}
+{% extends "profiles/base_profile.html" %}
 {% load static %}
-{% block styles %}
-	<link rel="stylesheet" type="text/css" href="{% static 'profiles/profile.css' %}">
-{% endblock styles %}
-{% block content %}
-	<h1>{{ title }}</h1>
-	<div class="nav nav-tabs">
-		<a href="" class="nav-item nav-link p-2 mx-1 {{profile_a}} {{profile_d}}">Profile</a>
-		<a href="" class="nav-item nav-link p-2 mx-1 {{wallets_a}} {{wallets_d}}">Wallets</a>
-		<a href="" class="nav-item nav-link p-2 mx-1 {{settings_a}} {{settings_d}}">Settings</a>
-	</div>
+{% block blck %}
 	<div class="container">
 	<div class="mt-3">
 		<p style="font-size: 1.9em;">Welcome, {{user.get_full_name}}</p>
@@ -37,16 +28,16 @@
 				<div class="dropdown d-inline" style="margin-right: 12px">
 				<a href="" class="btn btn-outline-info dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Скачать</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a href="" class="dropdown-item">.csv</a>
-						<a href="" class="dropdown-item">.txt</a>
-						<a href="" class="dropdown-item">.json</a>
+						<a href="{% static 'temp-files/person.csv' %}"  download="true" class="dropdown-item">.csv</a>
+						<a href="{% static 'temp-files/person.txt' %}"  download="true" class="dropdown-item">.txt</a>
+						<a href="{% static 'temp-files/person.json' %}" download="true"  class="dropdown-item">.json</a>
 					</div>
 				</div>
 
-				<a href="" class="btn btn-outline-warning">Изменить</a>
+				<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-warning">Изменить</a>
 				<a href="" class="btn btn-outline-danger">Удалить</a>
 			</div>
 		</div>
 	</div>
 	</div>
-{% endblock content %}
+{% endblock blck %}

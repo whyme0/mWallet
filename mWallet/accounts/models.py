@@ -1,17 +1,28 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinLengthValidator
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.db import models
 
-from .mixins import PersonMixin
 from .managers import PersonManager
+from .mixins import PersonMixin
 
 
 class Person(AbstractBaseUser, PermissionsMixin, PersonMixin):
-    first_name = models.CharField(_('Your name'), max_length=30, blank=True)
-    last_name = models.CharField(_('Your surname'), max_length=40, blank=True)
+    first_name = models.CharField(
+        _('Your name'),
+        max_length=30,
+        blank=True,
+        validators=[MinLengthValidator(2)]
+    )
+    last_name = models.CharField(
+        _('Your surname'),
+        max_length=40,
+        blank=True,
+        validators=[MinLengthValidator(2)]
+    )
     email = models.EmailField(_('Your email'), unique=True)
 
     is_staff = models.BooleanField(

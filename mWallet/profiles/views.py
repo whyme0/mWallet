@@ -5,7 +5,6 @@ from django.views.generic.edit import FormView
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from accounts.models import Person
 from .tools import create_download_files
 from .forms import PersonEditForm
 

@@ -1,10 +1,12 @@
+from django.views.generic.base import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from django.contrib import messages
 
+from accounts.models import Person
 from .tools import create_download_files
 from .forms import PersonEditForm
 
@@ -66,3 +68,27 @@ class EditProfile(FormView):
         })
 
         return ctx
+
+
+class DeleteConfirmation(TemplateView):
+    template_name = 'profiles/delete_confirmation.html'
+    extra_context = {'title': 'Deleting'}
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+
+class Delete(RedirectView):
+    pattern_name = 'home'
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            user_pk = self.request.user.pk
+
+            logout(self.request)
+            Person.objects.get(pk=user_pk).delete()
+            messages.success(self.request, 'Your Account successfully deleted.')
+            return super().get_redirect_url(*args, **kwargs)
+        else:
+            raise Exception('Error: You\'re not deleted.')

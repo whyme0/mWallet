@@ -1,8 +1,8 @@
-Name: Egor
-Middle name: Alekseevich
-Surname: Gitelman
+Name: 
+Middle name: 
+Surname: 
 Email: test@test.com
-Phone number: +380713710576
-Living place: Moscow
-Birth date: 1980-08-10
-Account created date: 2020-03-30 17:11:04.942543+00:00
+Phone number: +78005553535
+Living place: 
+Birth date: None
+Account created date: 2020-04-04 16:30:25+00:00

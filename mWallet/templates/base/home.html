@@ -7,9 +7,9 @@
 
 
 {% block content %}
-	{% if message_info %}
-		<p class="alert alert-success font-weight-bold">{{ message_info }}</p>	
-	{% endif %}
+	{% for msg in messages %}
+		<p class="alert alert-success font-weight-bold">{{ msg }}</p>	
+	{% endfor %}
     <div class="text-center" style='margin: 3rem 0'>
         <a href="{% url 'home' %}" class="home h2">mWallet</a>
         <p class="description h3">инструмент для управления вашими расходами</p>

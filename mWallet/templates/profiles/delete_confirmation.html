@@ -1,0 +1,9 @@
+{% extends "profiles/base_profile.html" %}
+
+{% block blck %}
+	<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+		<p class="alert-heading h4 py-4">You really wan't to delete your account?</p>
+  		<a href="{% url 'profiles:profile_delete' %}" class="btn btn-outline-success">Yes, I'm sure</a>
+		<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-danger ml-2">No! What I'm doing?</a>
+	</div>
+{% endblock blck %}

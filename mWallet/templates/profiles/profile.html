@@ -29,15 +29,15 @@
 			</div>
 				<div class="actions">
 					<div class="dropdown d-inline" style="margin-right: 12px">
-					<a href="" class="btn btn-outline-info dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Скачать</a>
+					<a href="" class="btn btn-outline-info dropdown-toggle mb-1" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a href="{% static 'temp-files/person.csv' %}"  download="true" class="dropdown-item">.csv</a>
 							<a href="{% static 'temp-files/person.txt' %}"  download="true" class="dropdown-item">.txt</a>
 							<a href="{% static 'temp-files/person.json' %}" download="true"  class="dropdown-item">.json</a>
 						</div>
 					</div>
-					<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-warning">Изменить</a>
-					<a href="" class="btn btn-outline-danger">Удалить</a>
+					<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-warning mb-1">Edit</a>
+					<a href="{% url 'authapp:logout' %}" class="btn btn-outline-dark mb-1">Log out</a>
 				</div>
 			</div>
 			<div class="col">

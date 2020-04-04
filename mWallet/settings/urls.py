@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
     path('profile/', include('profiles.urls')),
-    # path('auth/', include('auth.urls')),
+    path('auth/', include('authapp.urls')),
 ]

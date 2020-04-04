@@ -1,43 +1,98 @@
 {% extends "profiles/base_profile.html" %}
 {% load static %}
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'profiles/profile.css' %}">
+{% endblock styles %}
 {% block blck %}
 	<div class="container">
 	<div class="mt-3">
 		<p style="font-size: 1.9em;">Welcome, {{user.get_full_name}}</p>
 	</div>
-	<div class="row pl-3">
-		<div class="col p-0">
-		<p class="font-weight-bold">Your personal information: </p>
-		<div class="row mb-5">
-			<div class="col-2">
-				Your email: <br>
-				Your phone: <br>
-				Your living place: <br>
-				Your birth date: <br>
-				Account created date: <br>
-			</div>
-			<div class="col-4">
-				{{ user.email }}<br>
-				{{ user.phone_number }}<br>
-				{{ user.living_place }}<br>
-				{{ user.birth_date }}<br>
-				{{ user.created_date }}<br>
-			</div>
-		</div>
-			<div class="actions">
-				<div class="dropdown d-inline" style="margin-right: 12px">
-				<a href="" class="btn btn-outline-info dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Скачать</a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a href="{% static 'temp-files/person.csv' %}"  download="true" class="dropdown-item">.csv</a>
-						<a href="{% static 'temp-files/person.txt' %}"  download="true" class="dropdown-item">.txt</a>
-						<a href="{% static 'temp-files/person.json' %}" download="true"  class="dropdown-item">.json</a>
-					</div>
+		<div class="row pl-3">
+			<div class="col-8 p-0">
+			<p class="font-weight-bold">Your personal information: </p>
+			<div class="row mb-5">
+				<div class="col-2">
+					Your email: <br>
+					Your phone: <br>
+					Your living place: <br>
+					Your birth date: <br>
+					Account created date: <br>
 				</div>
-
-				<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-warning">Изменить</a>
-				<a href="" class="btn btn-outline-danger">Удалить</a>
+				<div class="col-4">
+					{{ user.email }}<br>
+					{{ user.phone_number }}<br>
+					{{ user.living_place }}<br>
+					{{ user.birth_date }}<br>
+					{{ user.created_date }}<br>
+				</div>
+			</div>
+				<div class="actions">
+					<div class="dropdown d-inline" style="margin-right: 12px">
+					<a href="" class="btn btn-outline-info dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Скачать</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a href="{% static 'temp-files/person.csv' %}"  download="true" class="dropdown-item">.csv</a>
+							<a href="{% static 'temp-files/person.txt' %}"  download="true" class="dropdown-item">.txt</a>
+							<a href="{% static 'temp-files/person.json' %}" download="true"  class="dropdown-item">.json</a>
+						</div>
+					</div>
+					<a href="{% url 'profiles:edit_profile' %}" class="btn btn-outline-warning">Изменить</a>
+					<a href="" class="btn btn-outline-danger">Удалить</a>
+				</div>
+			</div>
+			<div class="col">
+				<table id="calendar2">
+  					<thead>
+    					<tr><td>‹<td colspan="5"><td>›
+    					<tr><td>Mo<td>Tu<td>We<td>Th<td>Fr<td>Sa<td>Su
+ 					<tbody>
+				</table>
 			</div>
 		</div>
-	</div>
 	</div>
 {% endblock blck %}
+
+{% block js %}
+<script>
+	function Calendar2(id, year, month) {
+	var Dlast = new Date(year,month+1,0).getDate(),
+	    D = new Date(year,month,Dlast),
+	    DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
+	    DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
+	    calendar = '<tr>',
+	    month=["January","February","March","April","May","June","Jule","August","Semptember","October","November","December"];
+	if (DNfirst != 0) {
+	  for(var  i = 1; i < DNfirst; i++) calendar += '<td>';
+	}else{
+	  for(var  i = 0; i < 6; i++) calendar += '<td>';
+	}
+	for(var  i = 1; i <= Dlast; i++) {
+	  if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+	    calendar += '<td class="today">' + i;
+	  }else{
+	    calendar += '<td>' + i;
+	  }
+	  if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
+	    calendar += '<tr>';
+	  }
+	}
+	for(var  i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+	document.querySelector('#'+id+' tbody').innerHTML = calendar;
+	document.querySelector('#'+id+' thead td:nth-child(2)').innerHTML = month[D.getMonth()] +' '+ D.getFullYear();
+	document.querySelector('#'+id+' thead td:nth-child(2)').dataset.month = D.getMonth();
+	document.querySelector('#'+id+' thead td:nth-child(2)').dataset.year = D.getFullYear();
+	if (document.querySelectorAll('#'+id+' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+	    document.querySelector('#'+id+' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+	}
+	}
+	Calendar2("calendar2", new Date().getFullYear(), new Date().getMonth());
+	// переключатель минус месяц
+	document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
+	  Calendar2("calendar2", document.querySelector('#calendar2 thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar2 thead td:nth-child(2)').dataset.month)-1);
+	}
+	// переключатель плюс месяц
+	document.querySelector('#calendar2 thead tr:nth-child(1) td:nth-child(3)').onclick = function() {
+	  Calendar2("calendar2", document.querySelector('#calendar2 thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar2 thead td:nth-child(2)').dataset.month)+1);
+	};
+</script>
+{% endblock js %}

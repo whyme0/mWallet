@@ -15,7 +15,7 @@ class PersonMixin(models.Model):
     birth_date = models.DateField(
         _('Your birth date'),
         blank=True,
-        editable=True,
+        null=True,
     )
     phone_number = PhoneNumberField(
         _('Your phone number'),

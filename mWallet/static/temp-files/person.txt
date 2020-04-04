@@ -1,6 +1,6 @@
-Name: Ва
-Middle name: Альбертович
-Surname: Жмишенко
+Name: Egor
+Middle name: Alekseevich
+Surname: Gitelman
 Email: test@test.com
 Phone number: +380713710576
 Living place: Moscow

@@ -2,11 +2,12 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 
-from accounts.models import Person
+from accounts.models import Person, Wallet
 from .tools import create_download_files
 from .forms import PersonEditForm
 
@@ -92,3 +93,20 @@ class Delete(RedirectView):
             return super().get_redirect_url(*args, **kwargs)
         else:
             raise Exception('Error: You\'re not deleted.')
+
+
+class WalletsView(ListView):
+    model = Wallet
+    template_name = 'profiles/wallets.html'
+    paginate_by = 5
+    extra_context = {
+        'title': 'My wallets',
+        'wallets_a': 'active',
+        'wallets_d': 'disabled',
+    }
+
+    def get_queryset(self):
+        return Wallet.objects.filter(owner=self.request.user)
+
+    def get_context_object_name(self, obj):
+        return 'wallets'

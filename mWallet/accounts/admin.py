@@ -17,7 +17,12 @@ admin.site.register(Person, PersonAdmin)
 
 
 class WalletAdmin(admin.ModelAdmin):
-    fields = ('owner', 'name', 'description', 'created_date')
+    fields = (
+        'owner', 'name',
+        'description',
+        'balance', 'currency',
+        'created_date',
+    )
     search_fields = ('name', 'owner')
 
 

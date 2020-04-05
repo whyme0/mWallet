@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'authapp.apps.AuthappConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,6 @@ STATIC_URL = '/static/'
 
 # Determine what region should use phonenumber_field
 PHONENUMBER_DEFAULT_REGION = 'RU'
+
+# A style pack for crispy templates
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

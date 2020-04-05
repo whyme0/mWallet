@@ -1,0 +1,30 @@
+{% extends "profiles/base_profile.html" %}
+{% load static %}
+
+{% block styles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'profiles/wallets.css' %}">
+{% endblock styles %}
+{% block blck %}
+	<div class="container">
+		<div class="my-4">
+			<p style="font-size: 1.9em;" class="d-inline mr-2">Your Wallets</p>
+			<a href="" class="d-inline alert-success" title="Create new wallet"><strong class="h4">+</strong></a>
+		</div>
+
+		{% if wallets %}
+			{% for wallet in wallets %}
+			<div class="media border p-2 rounded border-dark">
+  				<img src="{% static 'profiles/photos/wallet-icon.png' %}" class="mr-3" width="64" height="64">
+  				<div class="media-body">
+    				<h3 class="m-0 font-weight-bold">{{ wallet.name }}</h3>
+    				<h5 class="font-weight-bold">{{ wallet.get_balance }}</h5>
+					<span class="w-75">{{ wallet.description }}</span><br>
+					<span class="created-date">Created: {{ wallet.created_date }}</span>
+				</div>
+			</div>
+			{% endfor %}
+		{% else %}
+			<p>No wallets are available</p>
+		{% endif %}
+	</div>
+{% endblock blck %}

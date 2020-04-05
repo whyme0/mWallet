@@ -7,7 +7,7 @@
 	<h1>{{ title }}</h1>
 	<div class="nav nav-tabs">
 		<a href="{% url 'profiles:current_profile' %}" class="nav-item nav-link p-2 mx-1 {{profile_a}} {{profile_d}}">Profile</a>
-		<a href="" class="nav-item nav-link p-2 mx-1 {{wallets_a}} {{wallets_d}}">Wallets</a>
+		<a href="{% url 'profiles:profile_wallets' %}" class="nav-item nav-link p-2 mx-1 {{wallets_a}} {{wallets_d}}">Wallets</a>
 		<a href="{% url 'profiles:edit_profile' %}" class="nav-item nav-link p-2 mx-1 {{settings_a}} {{settings_d}}">Edit</a>
 	</div>
 

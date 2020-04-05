@@ -80,22 +80,43 @@ class Wallet(models.Model):
         help_text='Maximum 300 letters available',
         max_length=300,
     )
+    balance = models.DecimalField(
+        _('Your current balance'),
+        decimal_places=2,
+        max_digits=11,
+        default=0.00,
+    )
+    currency = models.CharField(
+        _('Wallet currency'),
+        max_length=8,
+        choices=[
+            ('₽', 'RUB'),
+            ('₴', 'UAH'),
+            ('$', 'USD'),
+            ('€', 'EUR'),
+            ('£', 'GBP'),
+        ],
+        default=None,
+    )
 
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return 'Wallet: %s' % self.name
 
+    def get_balance(self):
+        return '%s%s' % (self.currency, self.balance)
+
 
 class Operation(models.Model):
     '''
-    Operation class stand for to determine payment and repayment
+    Operation class stand for determine payment and repayment
     '''
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     amount = models.DecimalField(
         _('Money payment/repayment amount'),
         decimal_places=2,
-        max_digits=6,
+        max_digits=11,
         default=0.00,
     )
 

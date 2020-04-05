@@ -1,4 +1,5 @@
 {% extends "profiles/base_profile.html" %}
+{% load crispy_forms_tags %}
 
 {% block blck %}
 	{% if messages %}
@@ -6,14 +7,12 @@
 			<p class="alert alert-success mt-3">{{ msg }}</p>
 		{% endfor %}
 	{% endif %}
-	<div>
+	<div class="w-50 mx-auto">
 		<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
-			{{ form.as_p }}
+			{{ form|crispy }}
 			<input type="submit" value="Edit" class="btn btn-primary">
 			<a href="{% url 'profiles:profile_deleting' %}" class="btn btn-outline-danger">Delete account</a>
 		</form>
 	</div>
-
-
 {% endblock blck %}

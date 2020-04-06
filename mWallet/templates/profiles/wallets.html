@@ -6,14 +6,19 @@
 {% endblock styles %}
 {% block blck %}
 	<div class="container">
+		{% if messages %}
+			{% for msg in messages %}
+				<p class="alert alert-success mt-3">{{ msg }}</p>
+			{% endfor %}
+		{% endif %}
 		<div class="my-4">
 			<p style="font-size: 1.9em;" class="d-inline mr-2">Your Wallets</p>
-			<a href="" class="d-inline alert-success" title="Create new wallet"><strong class="h4">+</strong></a>
+			<a href="{% url 'profiles:wallet_creation' %}" class="d-inline alert-success" title="Create new wallet"><strong class="h4">+</strong></a>
 		</div>
-
+		
 		{% if wallets %}
 			{% for wallet in wallets %}
-			<div class="media border p-2 rounded border-dark">
+			<div class="media border p-2 rounded border-dark mb-3">
   				<img src="{% static 'profiles/photos/wallet-icon.png' %}" class="mr-3" width="64" height="64">
   				<div class="media-body">
     				<h3 class="m-0 font-weight-bold">{{ wallet.name }}</h3>

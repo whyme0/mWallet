@@ -1,15 +1,17 @@
 from django.views.generic.base import TemplateView, RedirectView
+from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from django.urls import reverse_lazy
 from django.contrib import messages
 
 from accounts.models import Person, Wallet
 from .tools import create_download_files
-from .forms import PersonEditForm
+from .forms import PersonEditForm, WalletCreationForm
 
 
 class ProfileView(TemplateView):
@@ -99,6 +101,7 @@ class WalletsView(ListView):
     model = Wallet
     template_name = 'profiles/wallets.html'
     paginate_by = 5
+    order_by = ['-created_date']
     extra_context = {
         'title': 'My wallets',
         'wallets_a': 'active',
@@ -110,3 +113,20 @@ class WalletsView(ListView):
 
     def get_context_object_name(self, obj):
         return 'wallets'
+
+
+class WalletCreationView(CreateView):
+    form_class = WalletCreationForm
+    template_name = 'profiles/wallet-creation.html'
+    success_url = reverse_lazy('profiles:profile_wallets')
+    extra_context = {'title': 'Wallet creation'}
+
+    def form_valid(self, form):
+        Wallet.objects.create(owner=self.request.user, **form.cleaned_data)
+
+        messages.success(self.request, 'Wallet "%s" successfully created.' % form.cleaned_data['name'])
+        return redirect(self.success_url)
+
+
+class WalletEditView:
+    pass

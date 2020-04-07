@@ -2,3 +2,12 @@
 	font-size: 12px;
 	color: #c4c2c2;
 }
+
+.edit-wrapp .edit{
+	display: none;
+}
+
+.edit-wrapp:hover .edit{
+	position: relative;
+	display: inline;
+}

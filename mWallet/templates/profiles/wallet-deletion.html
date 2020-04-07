@@ -1,0 +1,14 @@
+{% extends "profiles/base_profile.html" %}
+
+{% block blck %}
+	<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+		<p class="alert-heading h4 py-4">You really wan't to delete this wallet?</p>
+		
+		<form method="post">
+			{% csrf_token %}
+			<input type="submit" class="btn btn-outline-success mb-2" value="Yes, I'm sure">
+			<a href="{% url 'profiles:current_wallet' wallet.pk %}" class="btn btn-outline-danger ml-2 mb-2">No, turn me back!</a>
+		</form>
+		
+	</div>
+{% endblock blck %}

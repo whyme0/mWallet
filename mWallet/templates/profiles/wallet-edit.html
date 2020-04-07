@@ -1,0 +1,16 @@
+{% extends "profiles/base_profile.html" %}
+{% load crispy_forms_tags %}
+
+{% block blck %}
+	<div class="w-50 mx-auto">
+		{% for msg in messages %}
+			<p class="alert alert-success">{{ msg }}</p>
+		{% endfor %}
+		<form method="POST" class="mt-4">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<input type="submit" value="Save" class="btn btn-primary">
+			<a href="{% url 'profiles:wallet_delete' wallet.pk %}" class="btn btn-outline-danger">Delete wallet</a>
+		</form>
+	</div>
+{% endblock blck %}

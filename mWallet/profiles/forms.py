@@ -18,7 +18,7 @@ class WalletCreationForm(forms.ModelForm):
         exclude = ['owner', 'created_date']
 
 
-# class WalletEditForm(forms.ModelsForm):
-#     class Meta:
-#         model = Wallet
-#         exclude = ['owner', 'created_date']
+class WalletEditForm(forms.ModelForm):
+    class Meta:
+        model = Wallet
+        exclude = ['owner', 'created_date']

@@ -18,10 +18,14 @@
 		
 		{% if wallets %}
 			{% for wallet in wallets %}
-			<div class="media border p-2 rounded border-dark mb-3">
+			<div class="edit-wrapp media border p-2 rounded border-dark mb-3">
   				<img src="{% static 'profiles/photos/wallet-icon.png' %}" class="mr-3" width="64" height="64">
   				<div class="media-body">
-    				<h3 class="m-0 font-weight-bold">{{ wallet.name }}</h3>
+    				<h3 class="font-weight-bold d-inline">{{ wallet.name }}</h3>
+					<a href="{% url 'profiles:wallet_edit' wallet.pk %}" class="edit">
+						<img src="{% static 'profiles/photos/edit.png' %}" alt="Edit" width="20" height="20">
+					</a>
+
     				<h5 class="font-weight-bold">{{ wallet.get_balance }}</h5>
 					<span class="w-75">{{ wallet.description }}</span><br>
 					<span class="created-date">Created: {{ wallet.created_date }}</span>

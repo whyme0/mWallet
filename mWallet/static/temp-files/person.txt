@@ -1,8 +1,8 @@
-Name: 
-Middle name: 
-Surname: 
-Email: test1@test.com
-Phone number: +79784568712
-Living place: 
-Birth date: None
-Account created date: 2020-04-07 16:58:05+00:00
+Name: Egor
+Middle name: Alekseevich
+Surname: Gitelman
+Email: test@test.com
+Phone number: +78005553535
+Living place: Kiev
+Birth date: 1488-01-01
+Account created date: 2020-04-04 16:30:25+00:00

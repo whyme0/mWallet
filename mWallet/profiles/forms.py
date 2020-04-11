@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import Person, Wallet
+from accounts.models import Person, Wallet, Operation
 
 
 class PersonEditForm(forms.ModelForm):
@@ -22,3 +22,9 @@ class WalletEditForm(forms.ModelForm):
     class Meta:
         model = Wallet
         exclude = ['owner', 'created_date']
+
+
+class OperationCreateForm(forms.ModelForm):
+    class Meta:
+        model = Operation
+        exclude = ['date']

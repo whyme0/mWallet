@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinLengthValidator
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.db import models
@@ -112,7 +113,13 @@ class Operation(models.Model):
     '''
     Operation class stand for determine payment and repayment
     '''
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    wallet = models.ForeignKey(
+        Wallet,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        default=None,
+    )
     amount = models.DecimalField(
         _('Money payment/repayment amount'),
         decimal_places=2,
@@ -129,8 +136,37 @@ class Operation(models.Model):
     # decide will it be payment or repayment
     option = models.CharField(
         _('Operation type'),
-        max_length=10,
-        choices=[('PAYMENT', 'Payment'), ('REPAYMENT', 'Repayment')],
+        max_length=13,
+        choices=[('PAYMENT', 'Payment'), ('REPLINISHMENT', 'Replinishment')],
     )
 
     date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.option}: {self.pk}'
+
+    def get_amount(self):
+        return '{}{}'.format(self.wallet.currency, self.amount)
+
+    def clean(self):
+        if self.option == 'REPLINISHMENT':
+            # check, if the payment amount + wallet balance will be
+            # more than wallet can accommodate
+            if len(str(self.amount + self.wallet.balance)) > 12:
+                raise ValidationError(
+                    {'amount': 'There is no more space in the wallet.'}
+                )
+        elif self.option == 'PAYMENT':
+            if self.amount > self.wallet.balance:
+                raise ValidationError(
+                    {'amount': 'The amount of payment is more than you have on your wallet.'}
+                )
+
+    def save(self, *args, **kwargs):
+        if self.option == 'PAYMENT':
+            self.wallet.balance = self.wallet.balance - self.amount
+        elif self.option == 'REPLINISHMENT':
+            self.wallet.balance = self.wallet.balance + self.amount
+
+        self.wallet.save()
+        return super().save(*args, **kwargs)

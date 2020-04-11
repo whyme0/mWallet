@@ -113,13 +113,7 @@ class Operation(models.Model):
     '''
     Operation class stand for determine payment and repayment
     '''
-    wallet = models.ForeignKey(
-        Wallet,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        default=None,
-    )
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     amount = models.DecimalField(
         _('Money payment/repayment amount'),
         decimal_places=2,

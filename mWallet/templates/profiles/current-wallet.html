@@ -1,0 +1,67 @@
+{% extends "profiles/base_profile.html" %}
+
+{% block blck %}
+	<div class="container">
+		{% for msg in messages %}
+			<p class="alert alert-success mt-3">{{ msg }}</p>
+		{% endfor %}
+		<div class="wallet">
+			<h1>My Wallet</h1>
+			<span>Wallet name: <strong>{{wallet.name}}</strong></span><br>
+			<span>Wallet balance: <strong>{{wallet.get_balance}}</strong></span><br>
+			<span>Wallet created date: <strong>{{wallet.created_date}}</strong></span><br><br>
+
+			<div class="alert alert-secondary">
+				<p class="p-0 h5">Wallet description:</p>
+				<span class="h6">{{ wallet.description }}</span>
+			</div>
+			<a class="btn btn-outline-warning" href="{% url 'profiles:wallet_edit' wallet.pk %}">Edit wallet</a>
+				
+		</div>
+
+		<div class="my-4">
+			<p style="font-size: 1.9em;" class="d-inline mr-2" id="operations-list">My operations</p>
+			<a href="{% url 'profiles:operation_create' wallet.pk %}" class="d-inline alert-success" title="Create new wallet"><strong class="h4">+</strong></a>
+		</div>
+
+		{% if operations %}
+			<nav aria-label="navigation">
+				<ul class="pagination">
+					{% if page_obj.has_previous %}
+						<li class="page-item"><a href="?page={{page_obj.previous_page_number}}#operations-list" class="page-link">Previous</a></li>
+					{% else %}
+						<li class="page-item disabled"><span class="page-link">Previous</span></li>
+					{% endif %}
+
+					<li class="page-item"><a href="?page=1#operations-list" class="page-link">1</a></li>
+					<li class="page-item disabled"><strong class="page-link">{{ page_obj.number }}</strong></li>
+					<li class="page-item"><a href="?page={{page_obj.paginator.num_pages}}#operations-list" class="page-link">{{page_obj.paginator.num_pages}}</a></li>
+
+					{% if page_obj.has_next %}
+						<li class="page-item"><a href="?page={{page_obj.next_page_number}}#operations-list" class="page-link">Next</a></li>
+					{% else %}
+						<li class="page-item disabled"><span class="page-link">Next</span></li>
+					{% endif %}
+				</ul>
+			</nav>
+			{% for operation in operations %}
+				{% if operation.option == "REPLINISHMENT" %}
+					<div class="operation alert alert-success">
+						<strong>Description: </strong>{{operation.description}}<br>
+						<strong>Replinishment amount: </strong>{{operation.get_amount}}<br>
+						<strong>Replinishment date: </strong>{{operation.date}}<br>
+					</div>
+				{% elif operation.option == "PAYMENT" %}
+					<div class="operation alert alert-danger">
+						<strong>Description: </strong>{{operation.description}}<br>
+						<strong>Payment amount: </strong>{{operation.get_amount}}<br>
+						<strong>Payment date: </strong>{{operation.date}}<br>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<p>No operations yet.</p>
+		{% endif %}
+			
+	</div>
+{% endblock blck %}

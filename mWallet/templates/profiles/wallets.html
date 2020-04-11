@@ -16,18 +16,42 @@
 			<a href="{% url 'profiles:wallet_creation' %}" class="d-inline alert-success" title="Create new wallet"><strong class="h4">+</strong></a>
 		</div>
 		
+
+    	<nav aria-label="navigation">
+			<ul class="pagination">
+				{% if page_obj.has_previous %}
+					<li class="page-item"><a href="?page={{page_obj.previous_page_number}}#operations-list" class="page-link">Previous</a></li>
+				{% else %}
+					<li class="page-item disabled"><span class="page-link">Previous</span></li>
+				{% endif %}
+
+				<li class="page-item"><a href="?page=1#operations-list" class="page-link">1</a></li>
+				<li class="page-item disabled"><strong class="page-link">{{ page_obj.number }}</strong></li>
+				<li class="page-item"><a href="?page={{page_obj.paginator.num_pages}}#operations-list" class="page-link">{{page_obj.paginator.num_pages}}</a></li>
+
+				{% if page_obj.has_next %}
+					<li class="page-item"><a href="?page={{page_obj.next_page_number}}#operations-list" class="page-link">Next</a></li>
+				{% else %}
+					<li class="page-item disabled"><span class="page-link">Next</span></li>
+				{% endif %}
+			</ul>
+		</nav>
+
+
+
+
 		{% if wallets %}
 			{% for wallet in wallets %}
 			<div class="edit-wrapp media border p-2 rounded border-dark mb-3">
   				<img src="{% static 'profiles/photos/wallet-icon.png' %}" class="mr-3" width="64" height="64">
-  				<div class="media-body">
-    				<h3 class="font-weight-bold d-inline">{{ wallet.name }}</h3>
+  				<div class="media-body w-100">
+    				<a href="{% url 'profiles:current_wallet' wallet.pk %}" class="h3 font-weight-bold d-inline text-dark">{{ wallet.name }}</a>
 					<a href="{% url 'profiles:wallet_edit' wallet.pk %}" class="edit">
 						<img src="{% static 'profiles/photos/edit.png' %}" alt="Edit" width="20" height="20">
 					</a>
 
     				<h5 class="font-weight-bold">{{ wallet.get_balance }}</h5>
-					<span class="w-75">{{ wallet.description }}</span><br>
+					<span>{{ wallet.description }}</span><br>
 					<span class="created-date">Created: {{ wallet.created_date }}</span>
 				</div>
 			</div>

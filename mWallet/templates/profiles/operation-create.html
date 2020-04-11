@@ -1,0 +1,12 @@
+{% extends "profiles/base_profile.html" %}
+{% load crispy_forms_tags %}
+
+{% block blck %}
+	<div class="w-50 mx-auto">
+		<form method="POST" class="mt-4">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<input type="submit" value="Create" class="btn btn-primary">
+		</form>
+	</div>
+{% endblock blck %}

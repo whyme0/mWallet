@@ -55,6 +55,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'settings.urls'
 
 AUTHENTICATION_BACKENDS = [
+    'authapp.authentication.PhoneOrEmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -136,3 +137,6 @@ PHONENUMBER_DEFAULT_REGION = 'RU'
 
 # A style pack for crispy templates
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# DEFAULT UURL TO LOGIN FORM
+LOGIN_URL = '/auth/login/'

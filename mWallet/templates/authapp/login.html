@@ -1,0 +1,12 @@
+{% extends "super.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+		<a href="">Forgot password?</a> |
+		<a href="">Register new account</a><br><br>
+		<input type="submit" value="Login" class="btn btn-primary">
+	</form>
+{% endblock content %}

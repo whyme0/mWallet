@@ -25,8 +25,8 @@ class ProfileView(TemplateView):
         create_download_files(pk=self.request.user.pk)
         return render(request, self.template_name, self.get_context_data())
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
         ctx.update({
             'title': 'Profile',
             'profile_a': 'active',

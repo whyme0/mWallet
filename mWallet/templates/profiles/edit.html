@@ -11,6 +11,7 @@
 		<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
 			{{ form|crispy }}
+			<a href="{% url 'authapp:password_change' %}?next={% url 'profiles:edit_profile' %}">Change password</a><br><br>
 			<input type="submit" value="Edit" class="btn btn-primary">
 			<a href="{% url 'profiles:profile_deleting' %}" class="btn btn-outline-danger">Delete account</a>
 		</form>

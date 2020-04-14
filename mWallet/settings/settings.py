@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 SECRET_KEY = 'wui941^vf#&^o6_1b2w*al$9u=pqcvh@*hnenfsy@355^ldp6x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition

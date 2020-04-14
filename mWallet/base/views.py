@@ -13,3 +13,7 @@ class HomeView(TemplateView):
             self.template_name,
             super().get_context_data(**kwargs),
         )
+
+
+def error_404(request, exception):
+    return render(request, 'base/404.html', {'title': 'Not found'})

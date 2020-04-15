@@ -1,7 +1,6 @@
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 from accounts.models import Person
-from django.db.models import Q
 
 
 class PhoneOrEmailBackend(ModelBackend):

@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth.forms import (
     AuthenticationForm, PasswordChangeForm,
     UserCreationForm,)
@@ -6,6 +7,8 @@ from accounts.models import Person
 
 
 class LoginForm(AuthenticationForm):
+    remember_me = forms.BooleanField(required=False)
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 

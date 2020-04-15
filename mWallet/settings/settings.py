@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 SECRET_KEY = 'wui941^vf#&^o6_1b2w*al$9u=pqcvh@*hnenfsy@355^ldp6x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
@@ -140,3 +140,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # DEFAULT UURL TO LOGIN FORM
 LOGIN_URL = '/auth/login/'
+
+# SESSION COOKIE AGE
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
+
+# Expire session when browser is closing
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

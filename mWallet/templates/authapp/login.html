@@ -10,6 +10,9 @@
   			</button>
 		</p>
 	{% endif %}
+	<div class="h3 mb-4">
+		Sign in  your account
+	</div>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form|crispy }}

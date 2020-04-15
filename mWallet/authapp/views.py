@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+from settings import settings
 from . import forms
 
 
@@ -44,8 +45,11 @@ class LoginView(FormView):
             person,
             backend='authapp.authentication.PhoneOrEmailBackend'
         )
-        messages.success(self.request, 'You successfully logged in.')
 
+        if form.cleaned_data['remember_me'] is True:
+            self.request.session.set_expiry(60 * 60 * 24 * 365)
+
+        messages.success(self.request, 'You successfully logged in.')
         return redirect(self.get_success_url())
 
     def get_success_url(self):

@@ -1,0 +1,14 @@
+{% extends "super.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<p class="h3">Feedback</p>
+	{% for msg in messages  %}
+		<p class="alert alert-success">{{ msg }}</p>
+	{% endfor %}
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{form|crispy}}
+		<input type="submit" value="Send message">
+	</form>
+{% endblock content %}

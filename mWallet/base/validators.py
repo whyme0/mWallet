@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.utils.translations import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import Person
 
@@ -15,7 +15,7 @@ def email_exist(value):
         )
 
 
-def check_empty(value):
+def check_message(value):
     if len(value.strip()) < 20:
         raise ValidationError(
             _('Your message seems really small, '

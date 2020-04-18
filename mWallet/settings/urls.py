@@ -16,14 +16,15 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 
-from base.views import HomeView
+from base import views
 
 # show error page with custom template if it not found (error 404)
 handler404 = 'base.views.error_404'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='home'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('feedback/', views.FeedbackView.as_view(), name='feedback'),
     path('profile/', include('profiles.urls')),
     path('auth/', include('authapp.urls')),
 ]

@@ -6,7 +6,7 @@
 	{% for msg in messages  %}
 		<p class="alert alert-success">{{ msg }}</p>
 	{% endfor %}
-	<form method="POST" action="">
+	<form method="POST">
 		{% csrf_token %}
 		{{form|crispy}}
 		<input type="submit" value="Send message">

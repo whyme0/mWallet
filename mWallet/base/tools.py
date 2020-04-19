@@ -41,9 +41,9 @@ def get_random_key(length=20):
 
 
 def send_yandex_email(from_, subject, message, files=None):
-    from_addr = 'fancydresscostume@yandex.com'
-    to_addr = 'fancydresscostume@yandex.com'
-    password = ')Gr;y)Sp}u[G(ZRu-<,=>Ep?Nt9Skys&Mc{dwL$>Hp;/9v,!wu'
+    from_addr = ''
+    to_addr = ''
+    password = ''
 
     msg = MIMEMultipart()
     msg['From'] = from_addr

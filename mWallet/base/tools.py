@@ -1,3 +1,6 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from random import randint
 
 chars = [
@@ -35,3 +38,26 @@ def get_random_key(length=20):
         str_ += chars[randint(0, len(chars)-1)]
 
     return str_
+
+
+def send_yandex_email(from_, subject, message, files=None):
+    from_addr = 'fancydresscostume@yandex.com'
+    to_addr = 'fancydresscostume@yandex.com'
+    password = ')Gr;y)Sp}u[G(ZRu-<,=>Ep?Nt9Skys&Mc{dwL$>Hp;/9v,!wu'
+
+    msg = MIMEMultipart()
+    msg['From'] = from_addr
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    message = """\
+    From: {0}
+
+    ______________
+    Body: {1}
+    """.format(from_, message)
+    msg.attach(MIMEText(message, 'plain'))
+
+    server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+    server.login(from_addr, password)
+    server.send_message(msg)
+    server.quit()

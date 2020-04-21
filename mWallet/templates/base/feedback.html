@@ -4,11 +4,19 @@
 {% block content %}
 	<p class="h3">Feedback</p>
 	{% for msg in messages  %}
-		<p class="alert alert-success">{{ msg }}</p>
+		{% if "feedback-done" in msg.tags %}
+			<p class="alert alert-success">{{ msg }}</p>
+		{% endif %}
 	{% endfor %}
 	<form method="POST">
 		{% csrf_token %}
 		{{form|crispy}}
+		
+		{% for msg in messages %}
+			{% if "recaptcha-error" in msg.tags %}
+				<p style="color:red;">{{msg}}</p>		
+			{% endif %}
+		{% endfor %}
 		<input type="submit" value="Send message">
 	</form>
 {% endblock content %}

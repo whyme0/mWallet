@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from unpublic import security
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'authapp.apps.AuthappConfig',
     'crispy_forms',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +148,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
 
 # Expire session when browser is closing
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Keys for google recaptcha
+RECAPTCHA_PUBLIC_KEY = security.GOOGLE_RECAPTCHA_PUBLIC_KEY
+RECAPTCHA_PRIVATE_KEY = security.GOOGLE_RECAPTCHA_SECRET_KEY

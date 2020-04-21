@@ -24,6 +24,19 @@ class PasswordChange(PasswordChangeForm):
         self.fields['new_password2'].label = 'Confirm new password'
 
 
+class PasswordReset(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label='New password',
+        max_length=128,
+    )
+    password_again = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirm new password',
+        max_length=128,
+    )
+
+
 class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)

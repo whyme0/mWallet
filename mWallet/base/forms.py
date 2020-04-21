@@ -1,7 +1,8 @@
+from captcha.fields import ReCaptchaField
 from django import forms
 
 from . import validators
-
+from unpublic import security
 
 class FeedbackForm(forms.Form):
     feedback_title = forms.CharField(label='Title')
@@ -16,4 +17,9 @@ class FeedbackForm(forms.Form):
     email = forms.EmailField(
         validators=[validators.email_exist],
         help_text='This email must be already registred.',
+    )
+
+    recaptcha = ReCaptchaField(
+        required=True,
+        error_messages={'required': 'Required!'},
     )

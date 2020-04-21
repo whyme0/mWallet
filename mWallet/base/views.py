@@ -1,3 +1,4 @@
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
@@ -26,7 +27,6 @@ class FeedbackView(FormView):
     template_name = 'base/feedback.html'
     extra_context = {
         'title': 'Feedback',
-        'token': tools.get_random_key(),
     }
 
     def form_valid(self, form):
@@ -35,8 +35,21 @@ class FeedbackView(FormView):
             form.cleaned_data['feedback_title'],
             form.cleaned_data['feedback_message'],
         )
-        messages.success(self.request, 'Thanks for your feedback. We will certainly consider it.')
+        messages.success(
+            self.request,
+            'Thanks for your feedback. We will certainly consider it.',
+            extra_tags='feedback-done',
+        )
         return redirect(reverse_lazy('feedback'))
+
+    def form_invalid(self, form):
+        if not form.cleaned_data.get('recaptcha', None):
+            messages.error(
+                self.request,
+                'Invlaid verification',
+                extra_tags='recaptcha-error',
+            )
+        return super().form_invalid(form)
 
 
 def error_404(request, exception):

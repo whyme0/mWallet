@@ -4,20 +4,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from random import randint
 
-# installed packages
-import requests
-from django.conf import settings
-from django.contrib import messages
-
 # local libraries
 from unpublic import security
+from authapp.models import Token
+from accounts.models import Person
 
 chars = [
     'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z',
     'x', 'c', 'v', 'b', 'n', 'm', '1', '2', '3', '4',
-    '5', '6', '7', '8', '9', '0', '@', '#', '%', '^',
-    '(', '*', ')', '[', ']', '{', '}',
+    '5', '6', '7', '8', '9', '0',
 ]
 
 
@@ -43,18 +39,28 @@ def get_random_key(length=20):
     Generate random key like set of chars as string
     and return this key.
     '''
-
     chrs_ = shuffle(chars, 30)
-    str_ = ''
-    for i in range(length):
-        str_ += chrs_[randint(0, len(chrs_)-1)]
+    token = ''
 
-    return str_
+    active_tokens = []
+    while True:
+        # creating token
+        for i in range(length):
+            token += chrs_[randint(0, len(chrs_) - 1)]
+
+        if token not in active_tokens:
+            try:
+                Token.objects.get(token=token)
+                active_tokens.append(token)
+
+            # if such token doesn't exist yet, then return it
+            except Token.DoesNotExist:
+                return token
 
 
-def send_yandex_email(from_, subject, message, files=None):
+def send_yandex_email(email, subject, message, files=None):
     from_addr = security.YA_EMAIL
-    to_addr = from_addr
+    to_addr = email
     password = security.YA_PASSWORD
 
     msg = MIMEMultipart()
@@ -66,7 +72,7 @@ def send_yandex_email(from_, subject, message, files=None):
 
     ______________
     Body: {1}
-    """.format(from_, message)
+    """.format(email, message)
     msg.attach(MIMEText(message, 'plain'))
 
     server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
@@ -75,27 +81,9 @@ def send_yandex_email(from_, subject, message, files=None):
     server.quit()
 
 
-def check_captcha(function):
-    def wrap(request, *args, **kwargs):
-        request.recaptcha_is_valid = None
-        if request.method == 'POST':
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            data = {
-                'secret': security.GOOGLE_RECAPTCHA_SECRET_KEY,
-                'response': recaptcha_response
-            }
-            r = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data=data,
-            )
-            result = r.json()
-            if result['success']:
-                request.recaptcha_is_valid = True
-            else:
-                request.recaptcha_is_valid = False
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-        return function(request, *args, **kwargs)
-
-    wrap.__doc__ = function.__doc__
-    wrap.__name__ = function.__name__
-    return wrap
+def is_email_exist(email):
+    try:
+        Person.objects.get(email=email)
+        return True
+    except Person.DoesNotExist:
+        return False

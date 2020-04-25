@@ -10,13 +10,16 @@
   			</button>
 		</p>
 	{% endif %}
+	{% for msg in messages %}
+		<p class="alert alert-success">{{msg}}</p>
+	{% endfor %}
 	<div class="h3 mb-4">
 		Sign in  your account
 	</div>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form|crispy }}
-		<a href="">Forgot password?</a> |
+		<a href="{% url 'authapp:ask_email' %}">Forgot password?</a> |
 		<a href="">Register new account</a><br><br>
 		<input type="submit" value="Login" class="btn btn-primary">
 	</form>

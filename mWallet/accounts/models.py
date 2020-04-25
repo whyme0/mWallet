@@ -143,6 +143,9 @@ class Operation(models.Model):
         return '{}{}'.format(self.wallet.currency, self.amount)
 
     def clean(self):
+        """
+        Validate option field
+        """
         if self.option == 'REPLINISHMENT':
             # check, if the payment amount + wallet balance will be
             # more than wallet can accommodate

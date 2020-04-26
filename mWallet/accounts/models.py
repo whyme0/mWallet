@@ -24,7 +24,13 @@ class Person(AbstractBaseUser, PermissionsMixin, PersonMixin):
         blank=True,
         validators=[MinLengthValidator(2)]
     )
-    email = models.EmailField(_('Your email'), unique=True)
+    email = models.EmailField(
+        _('Your email'),
+        unique=True,
+        error_messages={
+            'unique': 'This email already exists.'
+        },
+    )
 
     is_staff = models.BooleanField(
         _('staff status'),

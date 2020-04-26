@@ -21,6 +21,9 @@ class PersonMixin(models.Model):
         _('Your phone number'),
         unique=True,
         blank=True,
+        error_messages={
+            'unique': 'This phone number already exists.',
+        },
     )
     living_place = models.CharField(
         _('Your living place'),

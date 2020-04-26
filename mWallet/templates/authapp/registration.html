@@ -1,0 +1,13 @@
+{% extends "super.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container w-75">
+		<p class="h3 mb-3">Registration</p>
+		<form method="POST">
+			{% csrf_token %}
+			{{form|crispy}}
+			<input type="submit" value="Create user" class="btn btn-primary">
+		</form>
+	</div>
+{% endblock content %}

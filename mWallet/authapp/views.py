@@ -17,20 +17,8 @@ from accounts.models import Person
 
 def log_out(request):
     logout(request)
-
     messages.success(request, 'You\'re successfully loged out.')
     return redirect('home')
-
-
-class RegistrationView(FormView):
-    form_class = forms.RegistrationForm
-    template_name = 'authapp/registration.html'
-
-    def form_valid(self, form):
-        # after succefull registration person
-        # sign in system and redirect to
-        # profile page
-        return None
 
 
 class LoginView(FormView):
@@ -183,3 +171,15 @@ class PasswordResetView(TemplateView):
 
     def get_token(self):
         return Token.objects.get(token=self.kwargs['token'])
+
+
+class RegistrationView(FormView):
+    template_name = 'authapp/registration.html'
+    extra_tags = {'title': 'Registration'}
+    form_class = forms.RegistrationForm
+
+    def form_valid(self, form):
+        form.save()
+
+        messages.success(self.request, 'Account successfully created. Login now.')
+        return redirect('authapp:login')

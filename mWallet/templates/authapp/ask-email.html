@@ -2,10 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-	<p class="h4 mb-4 text-center">
-		Write email address of your user account. And we will sent password reset link on it.
-	</p>
 	<div class="container w-75">
+		<p class="h4 mb-2 text-center">
+			Write email address of your user account. And we will sent password reset link on it.
+		</p>
 		{% for msg in messages %}
 			{% if "token-404" in msg.extra_tags %}
 				<p class="alert alert-danger">{{msg}}</p>
